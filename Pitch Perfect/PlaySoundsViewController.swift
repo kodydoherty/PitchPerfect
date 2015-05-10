@@ -31,16 +31,10 @@ class PlaySoundsViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         stopButton.hidden = true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // Button Actions
     @IBAction func stopPlayback(sender: UIButton) {
-        audioPlayer.stop()
-        stopButton.hidden = true
+        stopAudioAndHide(true)
     }
     @IBAction func playDarthvaderAudio(sender: UIButton) {
         playAudioWithVariablePitch(-1000)
@@ -59,13 +53,16 @@ class PlaySoundsViewController: UIViewController {
     }
     
     // Helper functions
-    
+    // Stop audio player and engine.
+    func stopAudioAndHide(hide: Bool){
+        audioEngine.stop()
+        audioPlayer.stop()
+        stopButton.hidden = hide
+    }
     //Modify pitch and play recorded audio
     func playAudioWithVariablePitch(pitch: Float) {
-        audioPlayer.stop()
-        audioEngine.stop()
+        stopAudioAndHide(false)
         audioEngine.reset()
-        stopButton.hidden = false
         
         var audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
@@ -85,12 +82,11 @@ class PlaySoundsViewController: UIViewController {
     
     // Modify rate and play recorded audio
     func playAudio(rate: Float) {
-        audioPlayer.stop()
+        stopAudioAndHide(false)
         audioEngine.reset()
         audioPlayer.rate = rate
         audioPlayer.currentTime = 0
         audioPlayer.play()
-        stopButton.hidden = false
     }
 
 

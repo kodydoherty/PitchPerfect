@@ -9,7 +9,7 @@
 import Foundation
 
 // A class to contain the file path and title of a recorded audio file
-class RecordedAudio: NSObject {
+class RecordedAudio {
     let filePathUrl: NSURL!
     let title: String!
     
